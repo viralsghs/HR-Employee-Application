@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Employment Application Form — New Surat Hospital Group</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+  :root{--navy:#0d1b2a;--teal:#1a6b5c;--teal-light:#22896e;--gold:#c9a84c;--cream:#fdf6ec;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-400:#94a3b8;--gray-600:#475569;--gray-800:#1e293b;--red:#dc2626;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',sans-serif;background:var(--gray-50);color:var(--gray-800);min-height:100vh;}
+  .top-bar{background:var(--navy);padding:14px 32px;display:flex;align-items:center;gap:14px;}
+  .top-bar-logo{width:44px;height:44px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+  .top-bar-title{font-family:'Playfair Display',serif;font-size:18px;color:white;}
+  .top-bar-sub{font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px;}
+  .top-bar-doc{background:rgba(201,168,76,0.18);border:1px solid var(--gold);border-radius:5px;padding:3px 10px;font-size:11px;color:var(--gold);font-weight:700;margin-left:auto;flex-shrink:0;}
+  .form-wrap{max-width:860px;margin:0 auto;padding:28px 20px 80px;}
+  .form-body{background:white;border:1px solid var(--gray-200);border-radius:16px;padding:0 40px 40px;}
+  .form-section{border-top:1px solid var(--gray-100);padding:28px 0 0;margin-top:28px;}
+  .form-section:first-child{border-top:none;padding-top:28px;margin-top:0;}
+  .section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--teal);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--gray-100);}
+  .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+  .span-2{grid-column:1/-1;}
+  .field{display:flex;flex-direction:column;gap:5px;}
+  .field label{font-size:12px;font-weight:600;color:var(--gray-600);text-transform:uppercase;letter-spacing:0.5px;}
+  .req{color:var(--red);margin-left:2px;}
+  .field input,.field select,.field textarea{padding:10px 14px;border:1.5px solid var(--gray-200);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--gray-800);outline:none;transition:border-color 0.2s;background:white;width:100%;}
+  .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--teal);}
+  .field textarea{resize:vertical;min-height:76px;}
+  .field input.err,.field select.err{border-color:var(--red);}
+  .dyn-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:6px;}
+  .dyn-table th{background:var(--navy);color:white;padding:9px 11px;text-align:left;font-size:11px;letter-spacing:0.5px;font-weight:600;}
+  .dyn-table td{padding:5px 3px;border-bottom:1px solid var(--gray-100);}
+  .dyn-table td input{border:1.5px solid var(--gray-200);border-radius:6px;padding:7px 9px;font-size:13px;width:100%;font-family:'DM Sans',sans-serif;}
+  .dyn-table td input:focus{border-color:var(--teal);outline:none;}
+  .add-btn{font-size:13px;color:var(--teal);background:none;border:1px dashed var(--teal);border-radius:6px;padding:5px 14px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:600;margin-top:4px;}
+  .add-btn:hover{background:rgba(26,107,92,0.06);}
+  .del-btn{color:var(--red);background:none;border:none;cursor:pointer;font-size:16px;padding:4px;}
+  .radio-group{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-top:4px;}
+  .radio-opt{display:flex;align-items:center;gap:6px;cursor:pointer;}
+  .radio-opt input{width:16px;height:16px;cursor:pointer;accent-color:var(--teal);}
+  .radio-opt span{font-size:14px;}
+  .decl-box{background:var(--cream);border:1px solid #e8d9b5;border-radius:10px;padding:16px 18px;font-size:13px;color:var(--gray-600);line-height:1.7;}
+  .submit-bar{display:flex;align-items:center;justify-content:space-between;padding:20px 0 0;border-top:1px solid var(--gray-100);margin-top:28px;gap:12px;flex-wrap:wrap;}
+  .req-note{font-size:12px;color:var(--gray-400);}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;}
+  .btn-teal{background:var(--teal);color:white;}
+  .btn-teal:hover{background:var(--teal-light);}
+  .btn-teal:disabled{background:#9ca3af;cursor:not-allowed;}
+  .submitting-overlay{display:none;position:fixed;inset:0;background:rgba(13,27,42,0.78);z-index:999;align-items:center;justify-content:center;flex-direction:column;gap:16px;}
+  .submitting-overlay.show{display:flex;}
+  .spinner{width:52px;height:52px;border:4px solid rgba(255,255,255,0.2);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .submitting-text{color:white;font-size:16px;font-weight:600;letter-spacing:0.5px;}
+  .success-wrap{text-align:center;padding:60px 40px;}
+  .success-icon{font-size:64px;margin-bottom:20px;}
+  .success-title{font-family:'Playfair Display',serif;font-size:30px;color:var(--teal);margin-bottom:10px;}
+  .success-msg{color:var(--gray-600);font-size:15px;max-width:440px;margin:0 auto 28px;line-height:1.6;}
+  .app-id-badge{background:var(--navy);color:var(--gold);font-family:'Playfair Display',serif;font-size:28px;padding:16px 32px;border-radius:12px;display:inline-block;margin-bottom:14px;letter-spacing:2px;}
+  .error-banner{display:none;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 18px;margin-bottom:20px;color:var(--red);font-size:13px;font-weight:600;}
+  @media(max-width:640px){.form-body{padding:0 16px 28px;}.form-grid{grid-template-columns:1fr;}.span-2{grid-column:1;}.top-bar{padding:12px 16px;}.top-bar-doc{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="submitting-overlay" id="overlay">
+  <div class="spinner"></div>
+  <div class="submitting-text">Submitting your application…</div>
+</div>
+
+<div class="top-bar">
+  <div class="top-bar-logo">⚕</div>
+  <div>
+    <div class="top-bar-title">Employment Application Form</div>
+    <div class="top-bar-sub">New Surat Hospital Group — Please fill all required fields carefully</div>
+  </div>
+  <div class="top-bar-doc">HRD001 — Rev. 2024</div>
+</div>
+
+<div class="form-wrap">
+  <div id="form-container">
+    <div class="form-body">
+      <div id="error-banner" class="error-banner"></div>
+
+      <!-- 1. APPLICATION DETAILS -->
+      <div class="form-section">
+        <div class="section-title">Application Details</div>
+        <div class="form-grid">
+          <div class="field span-2"><label>Position Applied For <span class="req">*</span></label><input type="text" id="f-position" placeholder="e.g. Staff Nurse, Admin Executive"></div>
+          <div class="field"><label>Application Date <span class="req">*</span></label><input type="date" id="f-appdate"></div>
+          <div class="field"><label>Source / Reference</label><input type="text" id="f-source" placeholder="e.g. Job Portal, Walk-in, Referral"></div>
+        </div>
+      </div>
+
+      <!-- 2. NAME -->
+      <div class="form-section">
+        <div class="section-title">Full Name (in Block Letters)</div>
+        <div class="form-grid">
+          <div class="field"><label>First Name <span class="req">*</span></label><input type="text" id="f-fname" placeholder="First Name"></div>
+          <div class="field"><label>Middle Name</label><input type="text" id="f-mname" placeholder="Middle Name"></div>
+          <div class="field span-2"><label>Surname <span class="req">*</span></label><input type="text" id="f-lname" placeholder="Surname"></div>
+        </div>
+      </div>
+
+      <!-- 3. CONTACT -->
+      <div class="form-section">
+        <div class="section-title">Contact &amp; Address</div>
+        <div class="form-grid">
+          <div class="field span-2"><label>Present Address <span class="req">*</span></label><textarea id="f-presaddr" rows="2" placeholder="House No, Street, Area"></textarea></div>
+          <div class="field"><label>City</label><input type="text" id="f-city" placeholder="City"></div>
+          <div class="field"><label>PIN Code</label><input type="text" id="f-pin" placeholder="PIN Code" maxlength="6"></div>
+          <div class="field span-2"><label>Permanent Address (if different)</label><textarea id="f-permaddr" rows="2" placeholder="Permanent address"></textarea></div>
+          <div class="field"><label>Phone / Mobile <span class="req">*</span></label><input type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX"></div>
+          <div class="field"><label>Personal Mobile</label><input type="tel" id="f-mobile" placeholder="+91 XXXXX XXXXX"></div>
+          <div class="field"><label>Email Address <span class="req">*</span></label><input type="email" id="f-email" placeholder="email@example.com"></div>
+          <div class="field"><label>Emergency Contact No. <span class="req">*</span></label><input type="tel" id="f-emergency" placeholder="+91 XXXXX XXXXX"></div>
+        </div>
+      </div>
+
+      <!-- 4. PERSONAL -->
+      <div class="form-section">
+        <div class="section-title">Personal Details</div>
+        <div class="form-grid">
+          <div class="field"><label>Date of Birth <span class="req">*</span></label><input type="date" id="f-dob"></div>
+          <div class="field"><label>Gender <span class="req">*</span></label><select id="f-gender"><option value="">Select</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+          <div class="field"><label>Nationality</label><input type="text" id="f-nationality" placeholder="e.g. Indian"></div>
+          <div class="field"><label>Religion</label><input type="text" id="f-religion"></div>
+          <div class="field"><label>Marital Status</label><select id="f-marital"><option value="">Select</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select></div>
+          <div class="field"><label>Anniversary Date</label><input type="date" id="f-anniversary"></div>
+          <div class="field"><label>Blood Group</label><select id="f-blood"><option value="">Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+          <div class="field"><label>PAN No.</label><input type="text" id="f-pan" placeholder="AAAAA0000A" maxlength="10"></div>
+          <div class="field"><label>Height</label><input type="text" id="f-height" placeholder='e.g. 5&apos;7"'></div>
+          <div class="field"><label>Weight</label><input type="text" id="f-weight" placeholder="e.g. 65 kg"></div>
+          <div class="field"><label>Languages Known</label><input type="text" id="f-languages" placeholder="e.g. Gujarati, Hindi, English"></div>
+          <div class="field"><label>Hobbies</label><input type="text" id="f-hobbies" placeholder="e.g. Reading, Sports"></div>
+          <div class="field"><label>Computer Knowledge</label><input type="text" id="f-computer" placeholder="e.g. MS Office, Tally, EMR"></div>
+          <div class="field"><label>Driving License No.</label><input type="text" id="f-dl"></div>
+        </div>
+        <div style="margin-top:14px;" class="field">
+          <label>Vehicle Owned</label>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="vehicle" value="No" checked><span>No</span></label>
+            <label class="radio-opt"><input type="radio" name="vehicle" value="Yes"><span>Yes</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. EDUCATION -->
+      <div class="form-section">
+        <div class="section-title">Educational Qualifications</div>
+        <div style="overflow-x:auto;">
+        <table class="dyn-table"><thead><tr><th>Examination Passed</th><th>Institution Name &amp; City</th><th>Year</th><th>% Marks</th><th></th></tr></thead>
+        <tbody id="edu-body">
+          <tr><td><input type="text" placeholder="e.g. B.Sc Nursing"></td><td><input type="text" placeholder="College, City"></td><td><input type="text" placeholder="2022" style="width:80px"></td><td><input type="text" placeholder="75%" style="width:75px"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text" style="width:80px"></td><td><input type="text" style="width:75px"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text" style="width:80px"></td><td><input type="text" style="width:75px"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td></tr>
+        </tbody></table>
+        </div>
+        <button class="add-btn" onclick="addEdu()">+ Add Row</button>
+      </div>
+
+      <!-- 6. EXPERIENCE -->
+      <div class="form-section">
+        <div class="section-title">Work Experience (Most Recent First)</div>
+        <div style="overflow-x:auto;">
+        <table class="dyn-table"><thead><tr><th>Position Held</th><th>Organisation</th><th>From</th><th>To</th><th>Total Yrs</th><th>Monthly Salary (CTC)</th><th></th></tr></thead>
+        <tbody id="exp-body">
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text" placeholder="MM/YYYY" style="width:90px"></td><td><input type="text" placeholder="MM/YYYY" style="width:90px"></td><td><input type="text" style="width:70px"></td><td><input type="text"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text" style="width:90px"></td><td><input type="text" style="width:90px"></td><td><input type="text" style="width:70px"></td><td><input type="text"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td></tr>
+        </tbody></table>
+        </div>
+        <button class="add-btn" onclick="addExp()">+ Add Row</button>
+        <div class="form-grid" style="margin-top:16px;">
+          <div class="field"><label>Expected Salary (CTC)</label><input type="text" id="f-expsalary" placeholder="e.g. ₹4,00,000 per annum"></div>
+          <div class="field"><label>Expected Date of Joining</label><input type="date" id="f-doj"></div>
+        </div>
+      </div>
+
+      <!-- 7. TRAINING -->
+      <div class="form-section">
+        <div class="section-title">Other Training / Technical Certificates</div>
+        <table class="dyn-table"><thead><tr><th>Course</th><th>Duration</th><th>From</th><th>To</th><th>Remarks</th><th></th></tr></thead>
+        <tbody id="train-body">
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td></tr>
+        </tbody></table>
+        <button class="add-btn" onclick="addTrain()">+ Add Row</button>
+      </div>
+
+      <!-- 8. ACHIEVEMENT -->
+      <div class="form-section">
+        <div class="section-title">Achievements &amp; Strengths</div>
+        <div class="form-grid">
+          <div class="field span-2"><label>Achievements (Ranks, Merit, Scholarships, Prizes)</label><textarea id="f-achievement" rows="2" placeholder="List any significant achievements…"></textarea></div>
+          <div class="field"><label>Strengths</label><textarea id="f-strengths" rows="2" placeholder="Your key strengths…"></textarea></div>
+          <div class="field"><label>Weaknesses</label><textarea id="f-weaknesses" rows="2" placeholder="Areas for improvement…"></textarea></div>
+        </div>
+      </div>
+
+      <!-- 9. FAMILY -->
+      <div class="form-section">
+        <div class="section-title">Full Details of Family Members</div>
+        <table class="dyn-table"><thead><tr><th>Name</th><th>Relationship</th><th>Age</th><th>Education</th><th>Occupation</th><th></th></tr></thead>
+        <tbody id="family-body">
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text" style="width:60px"></td><td><input type="text"></td><td><input type="text"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td></tr>
+          <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text" style="width:60px"></td><td><input type="text"></td><td><input type="text"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td></tr>
+        </tbody></table>
+        <button class="add-btn" onclick="addFamily()">+ Add Row</button>
+      </div>
+
+      <!-- 10. REFERENCES -->
+      <div class="form-section">
+        <div class="section-title">References Details</div>
+        <div class="form-grid">
+          <div class="field"><label>Reference 1 — Name</label><input type="text" id="f-ref1name"></div>
+          <div class="field"><label>Reference 2 — Name</label><input type="text" id="f-ref2name"></div>
+          <div class="field"><label>Designation</label><input type="text" id="f-ref1desig"></div>
+          <div class="field"><label>Designation</label><input type="text" id="f-ref2desig"></div>
+          <div class="field"><label>Company</label><input type="text" id="f-ref1comp"></div>
+          <div class="field"><label>Company</label><input type="text" id="f-ref2comp"></div>
+          <div class="field"><label>Contact No.</label><input type="text" id="f-ref1contact"></div>
+          <div class="field"><label>Contact No.</label><input type="text" id="f-ref2contact"></div>
+        </div>
+      </div>
+
+      <!-- 11. RELATIVE -->
+      <div class="form-section">
+        <div class="section-title">Relative Working in Group Hospitals?</div>
+        <div class="field" style="margin-bottom:14px;">
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="hasRelative" value="No" checked onchange="toggleRelative()"><span>No</span></label>
+            <label class="radio-opt"><input type="radio" name="hasRelative" value="Yes" onchange="toggleRelative()"><span>Yes</span></label>
+          </div>
+        </div>
+        <div id="relative-section" style="display:none;">
+          <table class="dyn-table"><thead><tr><th>Name of Employee</th><th>Relationship</th><th>Company</th><th>Department</th><th>Designation</th><th>Contact</th><th></th></tr></thead>
+          <tbody id="relative-body">
+            <tr><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td></tr>
+          </tbody></table>
+          <button class="add-btn" onclick="addRelative()">+ Add Row</button>
+        </div>
+      </div>
+
+      <!-- 12. DECLARATION -->
+      <div class="form-section">
+        <div class="section-title">Declaration</div>
+        <div class="decl-box">I hereby agree and declare the asked information about my personal data as stated above is truly and certifying it with my signature as below and assuring that information given above by me is not false or misleading.</div>
+        <div class="form-grid" style="margin-top:16px;">
+          <div class="field"><label>Place <span class="req">*</span></label><input type="text" id="f-place" placeholder="City / Place"></div>
+          <div class="field"><label>Date <span class="req">*</span></label><input type="date" id="f-signdate"></div>
+          <div class="field span-2"><label>Full Name as Signature Confirmation <span class="req">*</span></label><input type="text" id="f-signname" placeholder="Type your full name to confirm declaration"></div>
+        </div>
+      </div>
+
+      <div class="submit-bar">
+        <p class="req-note">* Required fields must be filled before submission</p>
+        <button class="btn btn-teal" id="submit-btn" onclick="submitForm()">Submit Application →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="success-screen" style="display:none;">
+    <div class="form-body" style="border-radius:16px;">
+      <div class="success-wrap">
+        <div class="success-icon">✅</div>
+        <div class="success-title">Application Submitted!</div>
+        <div class="success-msg">Your employment application has been successfully submitted to the HR Department. Please note your Application ID for follow-up.</div>
+        <div class="app-id-badge" id="app-id-display">APP-000000</div>
+        <p style="color:#94a3b8;font-size:13px;margin-bottom:32px;">Please show this ID to HR reception for reference.</p>
+        <button class="btn btn-teal" onclick="location.reload()">Submit Another Application</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BELOW:
+const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+// ─────────────────────────────────────────────────────────────
+
+document.getElementById('f-appdate').value = new Date().toISOString().substring(0,10);
+document.getElementById('f-signdate').value = new Date().toISOString().substring(0,10);
+
+function toggleRelative() {
+  const yes = document.querySelector('input[name="hasRelative"]:checked')?.value === 'Yes';
+  document.getElementById('relative-section').style.display = yes ? 'block' : 'none';
+}
+function delRow(btn) { btn.closest('tr').remove(); }
+function mkRow(cells) { const tr = document.createElement('tr'); tr.innerHTML = cells; return tr; }
+function addEdu() { document.getElementById('edu-body').append(mkRow('<td><input type="text"></td><td><input type="text"></td><td><input type="text" style="width:80px"></td><td><input type="text" style="width:75px"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td>')); }
+function addExp() { document.getElementById('exp-body').append(mkRow('<td><input type="text"></td><td><input type="text"></td><td><input type="text" style="width:90px"></td><td><input type="text" style="width:90px"></td><td><input type="text" style="width:70px"></td><td><input type="text"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td>')); }
+function addTrain() { document.getElementById('train-body').append(mkRow('<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td>')); }
+function addFamily() { document.getElementById('family-body').append(mkRow('<td><input type="text"></td><td><input type="text"></td><td><input type="text" style="width:60px"></td><td><input type="text"></td><td><input type="text"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td>')); }
+function addRelative() { document.getElementById('relative-body').append(mkRow('<td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><input type="text"></td><td><button class="del-btn" onclick="delRow(this)">×</button></td>')); }
+
+function v(id) { return (document.getElementById(id)?.value || '').trim(); }
+
+function getTableData(bodyId, cols) {
+  const rows = [];
+  document.getElementById(bodyId)?.querySelectorAll('tr').forEach(tr => {
+    const inputs = tr.querySelectorAll('input');
+    const row = {}; let hasData = false;
+    cols.forEach((col,i) => { row[col]=(inputs[i]?.value||'').trim(); if(row[col]) hasData=true; });
+    if (hasData) rows.push(row);
+  });
+  return rows;
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-banner');
+  el.textContent = '⚠ ' + msg;
+  el.style.display = 'block';
+  el.scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+async function submitForm() {
+  document.getElementById('error-banner').style.display = 'none';
+
+  // Validate
+  const required = [
+    ['f-position','Position Applied For'],['f-fname','First Name'],['f-lname','Surname'],
+    ['f-appdate','Application Date'],['f-presaddr','Present Address'],['f-phone','Phone / Mobile'],
+    ['f-email','Email Address'],['f-emergency','Emergency Contact'],['f-dob','Date of Birth'],
+    ['f-gender','Gender'],['f-place','Place'],['f-signdate','Signature Date'],['f-signname','Signature Name']
+  ];
+  let firstError = null;
+  required.forEach(([id, label]) => {
+    const el = document.getElementById(id);
+    if (!el?.value?.trim()) { el?.classList.add('err'); if (!firstError) firstError = label; }
+    else el?.classList.remove('err');
+  });
+  if (firstError) { showError('Please fill: ' + firstError); return; }
+
+  const vehicle = document.querySelector('input[name="vehicle"]:checked')?.value || 'No';
+  const hasRelative = document.querySelector('input[name="hasRelative"]:checked')?.value || 'No';
+
+  const app = {
+    id: 'APP-' + Date.now().toString().slice(-6),
+    submittedAt: new Date().toISOString(),
+    status: 'new',
+    fullName: [v('f-fname'), v('f-mname'), v('f-lname')].filter(Boolean).join(' '),
+    fname: v('f-fname'), mname: v('f-mname'), lname: v('f-lname'),
+    position: v('f-position'), appdate: v('f-appdate'), source: v('f-source'),
+    presaddr: v('f-presaddr'), city: v('f-city'), pin: v('f-pin'), permaddr: v('f-permaddr'),
+    phone: v('f-phone'), mobile: v('f-mobile'), email: v('f-email'), emergency: v('f-emergency'),
+    dob: v('f-dob'), gender: v('f-gender'), nationality: v('f-nationality'), religion: v('f-religion'),
+    marital: v('f-marital'), anniversary: v('f-anniversary'), blood: v('f-blood'), pan: v('f-pan'),
+    height: v('f-height'), weight: v('f-weight'), languages: v('f-languages'), hobbies: v('f-hobbies'),
+    vehicle, dl: v('f-dl'), computer: v('f-computer'),
+    achievement: v('f-achievement'), strengths: v('f-strengths'), weaknesses: v('f-weaknesses'),
+    expsalary: v('f-expsalary'), doj: v('f-doj'),
+    ref1_name: v('f-ref1name'), ref1_desig: v('f-ref1desig'), ref1_company: v('f-ref1comp'), ref1_contact: v('f-ref1contact'),
+    ref2_name: v('f-ref2name'), ref2_desig: v('f-ref2desig'), ref2_company: v('f-ref2comp'), ref2_contact: v('f-ref2contact'),
+    hasRelative, place: v('f-place'), signdate: v('f-signdate'), signname: v('f-signname'),
+    education_json:  JSON.stringify(getTableData('edu-body',    ['exam','institution','year','marks'])),
+    experience_json: JSON.stringify(getTableData('exp-body',    ['position','organisation','from','to','totalYears','salary'])),
+    training_json:   JSON.stringify(getTableData('train-body',  ['course','duration','from','to','remarks'])),
+    family_json:     JSON.stringify(getTableData('family-body', ['name','relationship','age','education','occupation'])),
+    relatives_json:  hasRelative==='Yes' ? JSON.stringify(getTableData('relative-body',['name','relationship','company','dept','desig','contact'])) : '[]'
+  };
+
+  // Show spinner, disable button
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('submit-btn').disabled = true;
+
+  let success = false;
+
+  try {
+    if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+      // Dev mode — skip Sheets, just show success
+      success = true;
+    } else {
+      const resp = await fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'submitApplication', payload: app })
+      });
+      const result = await resp.json();
+      if (result.success) {
+        success = true;
+        if (result.id) app.id = result.id;
+      } else {
+        console.error('Sheets error:', result.error);
+      }
+    }
+  } catch(err) {
+    console.error('Submit error:', err);
+  }
+
+  document.getElementById('overlay').classList.remove('show');
+
+  if (!success) {
+    document.getElementById('submit-btn').disabled = false;
+    showError('Submission failed. Please check your internet and try again, or contact HR reception.');
+    return;
+  }
+
+  document.getElementById('form-container').style.display = 'none';
+  document.getElementById('success-screen').style.display = 'block';
+  document.getElementById('app-id-display').textContent = app.id;
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
